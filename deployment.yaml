@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: devops-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: devops-app
@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
       - name: devops-container
-        image: askarisyed/devops-app
+        image: devops-app:local
+        imagePullPolicy: Never
         ports:
         - containerPort: 5000

@@ -1,0 +1,7 @@
+Devops_Lab_App.pem
+__pycache__/
+.venv/
+*.bak
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup

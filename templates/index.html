@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DevOps Lab App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="card">
+        <div class="eyebrow">Jenkins webhook deployment</div>
+        <h1>DevOps Lab App</h1>
+        <p class="lead">
+          If you can see this page, the latest Jenkins build reached the EC2 host and the Flask app is serving the updated UI.
+        </p>
+
+        <div class="status-grid">
+          <article class="status-tile success">
+            <span class="label">Deployment</span>
+            <strong>Live</strong>
+            <p>Docker container responding on port 5000.</p>
+          </article>
+          <article class="status-tile accent">
+            <span class="label">Webhook</span>
+            <strong>Ready</strong>
+            <p>Push to <code>main</code> to trigger Jenkins.</p>
+          </article>
+        </div>
+
+        <div class="build-chip">Build marker: <span>{{ build_label }}</span></div>
+      </section>
+    </main>
+  </body>
+</html>

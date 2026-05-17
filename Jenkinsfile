@@ -1,9 +1,23 @@
 pipeline {
     agent any
 
+    triggers {
+        githubPush()
+    }
+
+    options {
+        timestamps()
+    }
+
+    environment {
+        IMAGE_NAME = 'devops-app'
+        CONTAINER_NAME = 'devops-app'
+        APP_PORT = '5000'
+    }
+
     stages {
 
-        stage('Clone Repo') {
+        stage('Checkout') {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/AskariSyed/devops-lab-app.git'
@@ -12,14 +26,23 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t devops-app .'
+                sh 'docker build -t ${IMAGE_NAME}:latest .'
             }
         }
 
-        stage('Run Container') {
+        stage('Deploy Container') {
             steps {
-                bat 'docker run -d -p 5000:5000 devops-app'
+                sh '''
+                    docker rm -f ${CONTAINER_NAME} || true
+                    docker run -d --name ${CONTAINER_NAME} -p ${APP_PORT}:5000 ${IMAGE_NAME}:latest
+                '''
             }
+        }
+    }
+
+    post {
+        failure {
+            sh 'docker logs ${CONTAINER_NAME} || true'
         }
     }
 }
