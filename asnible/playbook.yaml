@@ -128,10 +128,16 @@
         state: started
         enabled: true
 
-    - name: Ensure Jenkins service is enabled and running
+    - name: Add jenkins to the docker group
+      ansible.builtin.user:
+        name: jenkins
+        groups: docker
+        append: true
+
+    - name: Ensure Jenkins service is enabled and restarted
       ansible.builtin.service:
         name: jenkins
-        state: started
+        state: restarted
         enabled: true
 
     - name: Add ubuntu to the docker group
